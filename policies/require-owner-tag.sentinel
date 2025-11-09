@@ -5,14 +5,16 @@ import "strings"
 changed = tfplan.resources.changes
 
 has_owner = func(tags) {
-  return tags contains "Owner" and trim(tags["Owner"]) != ""
+  return tags contains "Owner" and strings.trim_space(tags["Owner"]) != ""
 }
 
 main = rule {
   all changed as _, r {
-    # Solo aplica a recursos con tags (ej: aws_instance, aws_s3_bucket, etc.)
-    tags = r.after.tags else {}
-    # Si el recurso tiene campo tags, exigir Owner
-    length(tags) == 0 or has_owner(tags)
+    # Solo aplica a recursos que soportan tags
+    if "tags" in r.after {
+      has_owner(r.after.tags)
+    } else {
+      true  # Recursos sin soporte de tags pasan
+    }
   }
 }
