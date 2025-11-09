@@ -1,0 +1,18 @@
+import "tfplan/v2" as tfplan
+import "strings"
+
+# Revisa recursos nuevos o cambiados con tags
+changed = tfplan.resources.changes
+
+has_owner = func(tags) {
+  return tags contains "Owner" and trim(tags["Owner"]) != ""
+}
+
+main = rule {
+  all changed as _, r {
+    # Solo aplica a recursos con tags (ej: aws_instance, aws_s3_bucket, etc.)
+    tags = r.after.tags else {}
+    # Si el recurso tiene campo tags, exigir Owner
+    length(tags) == 0 or has_owner(tags)
+  }
+}

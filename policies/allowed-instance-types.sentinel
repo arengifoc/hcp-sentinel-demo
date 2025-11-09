@@ -1,0 +1,15 @@
+import "tfplan/v2" as tfplan
+
+allowed = ["t3.micro", "t3.small"]
+
+instances = filter tfplan.resources.changes as _, r {
+  r.type is "aws_instance" and r.mode is "managed"
+}
+
+main = rule {
+  all instances as _, inst {
+    after = inst.after
+    # permitir si no es instancia o si el tipo está en la lista
+    after.instance_type is null or (after.instance_type in allowed)
+  }
+}
