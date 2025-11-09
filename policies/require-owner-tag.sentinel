@@ -1,20 +1,24 @@
 import "tfplan/v2" as tfplan
 import "strings"
 
-# Revisa recursos nuevos o cambiados con tags
-changed = tfplan.resources.changes
+# Check resources being created or updated
+resource_changes = tfplan.resource_changes
 
-has_owner = func(tags) {
-  return tags contains "Owner" and strings.trim_space(tags["Owner"]) != ""
+has_owner_tag = func(tags) {
+  if tags is null {
+    return false
+  }
+  return "Owner" in tags and strings.trim_space(tags.Owner) != ""
 }
 
 main = rule {
-  all changed as _, r {
-    # Solo aplica a recursos que soportan tags
-    if "tags" in r.after {
-      has_owner(r.after.tags)
+  all resource_changes as _, r {
+    # Skip resources that don't support tags
+    if r.change.after is null or "tags" not in r.change.after {
+      true
     } else {
-      true  # Recursos sin soporte de tags pasan
+      # Require Owner tag for resources that support tags
+      has_owner_tag(r.change.after.tags)
     }
   }
 }

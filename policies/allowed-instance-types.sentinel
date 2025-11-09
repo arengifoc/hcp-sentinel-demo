@@ -2,14 +2,18 @@ import "tfplan/v2" as tfplan
 
 allowed = ["t3.micro", "t3.small"]
 
-instances = filter tfplan.resources.changes as _, r {
-  r.type is "aws_instance" and 
-  r.mode is "managed" and
-  ("create" in r.change.actions or "update" in r.change.actions)
+# Filter AWS instances being created or updated
+instances = filter tfplan.resource_changes as _, r {
+  r.type == "aws_instance" and 
+  r.mode == "managed" and
+  (r.change.actions[0] == "create" or 
+   r.change.actions[0] == "update" or
+   "create" in r.change.actions or
+   "update" in r.change.actions)
 }
 
 main = rule {
   all instances as _, inst {
-    inst.after.instance_type in allowed
+    inst.change.after.instance_type in allowed
   }
 }
