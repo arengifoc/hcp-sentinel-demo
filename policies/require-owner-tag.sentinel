@@ -1,24 +1,24 @@
 import "tfplan/v2" as tfplan
 import "strings"
 
-# Check resources being created or updated
+# Get all resource changes
 resource_changes = tfplan.resource_changes
 
-has_owner_tag = func(tags) {
-  if tags is null {
-    return false
-  }
-  return "Owner" in tags and strings.trim_space(tags.Owner) != ""
+# Function to check if resource has valid Owner tag
+has_valid_owner_tag = func(rc) {
+	# Skip if resource doesn't have tags
+	if rc.change.after.tags is undefined {
+		return true
+	}
+
+	# Check if Owner tag exists and is not empty
+	tags = rc.change.after.tags
+	return "Owner" in tags and strings.trim_space(tags["Owner"]) is not ""
 }
 
+# Main rule
 main = rule {
-  all resource_changes as _, r {
-    # Skip resources that don't support tags
-    if r.change.after is null or "tags" not in r.change.after {
-      true
-    } else {
-      # Require Owner tag for resources that support tags
-      has_owner_tag(r.change.after.tags)
-    }
-  }
+	all resource_changes as _, rc {
+		has_valid_owner_tag(rc)
+	}
 }
