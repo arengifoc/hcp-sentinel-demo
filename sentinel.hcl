@@ -8,7 +8,7 @@ policy "allowed-instances" {
   enforcement_level = "mandatory"
 }
 
-policy "required-owner-tag" {
-  source            = "./policies/required-owner-tag.sentinel"
+policy "require-owner-tag" {
+  source            = "./policies/require-owner-tag.sentinel"
   enforcement_level = "mandatory"
 }
