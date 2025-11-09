@@ -1,4 +1,4 @@
 policy "no-import-test" {
-  source            = "no-import-test.sentinel"
+  source            = "./policies/no-import-test.sentinel"
   enforcement_level = "advisory"
 }
