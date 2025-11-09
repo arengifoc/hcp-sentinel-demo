@@ -1,0 +1,4 @@
+# Poltica de prueba mnima
+main = rule {
+	true
+}

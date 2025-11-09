@@ -1,0 +1,4 @@
+# Minimal test without imports
+main = rule {
+    true
+}

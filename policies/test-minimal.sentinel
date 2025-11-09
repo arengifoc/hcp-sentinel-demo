@@ -1,0 +1,4 @@
+# Test minimal policy
+main = rule {
+	true
+}
