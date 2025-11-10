@@ -1,0 +1,22 @@
+{
+	"records": [
+		{
+			"key": "no-import-test",
+			"source": "./policies/no-import-test.sentinel",
+			"sourceSum": "",
+			"dest": "/home/arengifo/Documentos/git/arengifoc/hcp-sentinel-demo/policies/no-import-test.sentinel"
+		},
+		{
+			"key": "allowed-instances",
+			"source": "./policies/allowed-instance-types.sentinel",
+			"sourceSum": "",
+			"dest": "/home/arengifo/Documentos/git/arengifoc/hcp-sentinel-demo/policies/allowed-instance-types.sentinel"
+		},
+		{
+			"key": "require-owner-tag",
+			"source": "./policies/require-owner-tag.sentinel",
+			"sourceSum": "",
+			"dest": "/home/arengifo/Documentos/git/arengifoc/hcp-sentinel-demo/policies/require-owner-tag.sentinel"
+		}
+	]
+}

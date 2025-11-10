@@ -4,11 +4,11 @@ policy "no-import-test" {
 }
 
 policy "allowed-instances" {
-  source            = "./policies/allowed-instances.sentinel"
-  enforcement_level = "mandatory"
+  source            = "./policies/allowed-instance-types.sentinel"
+  enforcement_level = "soft-mandatory"
 }
 
 policy "require-owner-tag" {
   source            = "./policies/require-owner-tag.sentinel"
-  enforcement_level = "mandatory"
+  enforcement_level = "hard-mandatory"
 }
