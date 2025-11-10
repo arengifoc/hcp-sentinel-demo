@@ -3,12 +3,12 @@ policy "no-import-test" {
   enforcement_level = "advisory"
 }
 
-# policy "allowed-instances" {
-#   source            = "./policies/allowed-instance-types.sentinel"
-#   enforcement_level = "advisory"
-# }
-
-policy "require-owner-tag" {
-  source            = "./policies/require-owner-tag.sentinel"
+policy "allowed-instances" {
+  source            = "./policies/allowed-instance-types.sentinel"
   enforcement_level = "advisory"
 }
+
+# policy "require-owner-tag" {
+#   source            = "./policies/require-owner-tag.sentinel"
+#   enforcement_level = "advisory"
+# }
