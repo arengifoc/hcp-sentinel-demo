@@ -8,7 +8,7 @@ policy "allowed-instances" {
   enforcement_level = "advisory"
 }
 
-# policy "require-owner-tag" {
-#   source            = "./policies/require-owner-tag.sentinel"
-#   enforcement_level = "advisory"
-# }
+policy "require-owner-tag" {
+  source            = "./policies/require-owner-tag.sentinel"
+  enforcement_level = "advisory"
+}
