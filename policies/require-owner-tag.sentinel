@@ -6,15 +6,22 @@ resource_changes = tfplan.resource_changes
 
 # Function to check if resource has valid Owner tag
 has_valid_owner_tag = func(rc) {
-	# Skip if resource doesn't have tags
-	if rc.change.after not contains "tags" {
+	# Skip if resource change after is null or doesn't have tags
+	if rc.change.after is null {
 		return true
-	} else {
-		# Check if Owner tag exists and is not empty
-		tags = rc.change.after.tags
-		return "Owner" in tags and strings.trim_space(tags["Owner"]) is not ""
-
 	}
+
+	if "tags" not in rc.change.after {
+		return true
+	}
+
+	# Check if Owner tag exists and is not empty
+	tags = rc.change.after.tags
+	if tags is null {
+		return false
+	}
+
+	return "Owner" in tags and strings.trim_space(tags["Owner"]) is not ""
 }
 
 # Main rule
