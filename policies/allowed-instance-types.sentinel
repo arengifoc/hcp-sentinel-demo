@@ -1,7 +1,7 @@
 import "tfplan/v2" as tfplan
 
 # Allowed instance types
-allowed_types = ["t3.micro", "t3.small"]
+allowed_types = ["t3.micro", "t3.small", "t3.medium"]
 
 # Get all AWS instances
 instances = filter tfplan.resource_changes as _, rc {
